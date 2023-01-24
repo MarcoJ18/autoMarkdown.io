@@ -8,7 +8,8 @@ let createFile = ''; // Here add the all content of the file
 let count = 0; // Count num of img 
 let varLoop = []; // Count the content of the document
 let idNum = []; // Count Number of elements
-let lista = []; // Array of elements of the document content
+let lista = []; // Array of elements of the document content without #
+let markdown = []; //Arrry of markdown elements with #
 
 //This function create a title
 
@@ -49,11 +50,27 @@ const addLista = () =>{
     
 }
 
+//Add hr
+
+
+
+
+// Loop of markdown elements
+
+const crearMDFormat = text =>{
+    for (let i of text) {
+        markdown.push(i);
+    }
+}
+
+
 //This function format the header of markdown files
 
-const formatMD = text =>{
-    //console.log(`${text} <a name="id"></a>`);
-    //createFile += `${text} <a name="id"></a>` + '\n';  
+const formatMD = () =>{
+    for (let i = 0; i < idNum.length; i++) {
+        let addHTML = `${markdown[i]}<a href='id${idNum[i]}'></a>`;   
+        createFile += addHTML + '\n';
+    } 
     
 }
 
@@ -90,7 +107,8 @@ readFile.addEventListener('change',()=>{
         id(varLoop);
         crearLista(varLoop);
         addLista();
-        formatMD(varLoop);
+        crearMDFormat(varLoop);
+        formatMD();
     })
     reader.readAsText(readFile.files[0]);
     downloadFile();
