@@ -1,8 +1,9 @@
 "use strict";
-//const readFile = document.getElementById('readFile');
+const readFile = document.getElementById('readFile');
 const generate = document.getElementById('generate');
 const md = document.getElementById('md');
 const textarea = document.getElementById('textarea');
+const img = document.getElementById('img');
 
 let createFile = ''; // Here add the all content of the file
 let count = 0; // Count num of img 
@@ -64,6 +65,17 @@ const crearMDFormat = text =>{
 }
 
 
+//Count total of img
+
+const countIMG = ()=>{
+    let img = prompt('¿Cuántas imagenes tienes?');
+    for (let i = 0; i < Number(img); i++) {
+        createFile += `![]/img${i}.png` + '\n';
+    }
+};
+
+
+
 //This function format the header of markdown files
 
 const formatMD = () =>{
@@ -93,11 +105,18 @@ const downloadFile = () =>{
 
 //This is called where initial all 
 
-readFile.addEventListener('change',()=>{
+readFile.addEventListener('change',(e)=>{
+    leerDocumento(readFile.files[0]);
+    downloadFile();
+})
+
+
+const leerDocumento = ar =>{
     crearTitulo();
     const reader = new FileReader();
+    reader.readAsText(ar);
     reader.addEventListener('load',(e)=>{
-        let result = e.target.result;
+        let result = e.currentTarget.result;
         for (let i of result.split('\n')){
             if(i.startsWith('#') && !i.includes('#!/bin/sh') && !i.includes('#!/bin/bash')){
                 varLoop.push(i);
@@ -109,9 +128,8 @@ readFile.addEventListener('change',()=>{
         addLista();
         crearMDFormat(varLoop);
         formatMD();
-    })
-    reader.readAsText(readFile.files[0]);
-    downloadFile();
-})
+        countIMG();
+    });
+}
 
 
