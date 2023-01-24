@@ -7,7 +7,8 @@ const textarea = document.getElementById('textarea');
 let createFile = ''; // Here add the all content of the file
 let count = 0; // Count num of img 
 let varLoop = []; // Count the content of the document
-let idNum = [];
+let idNum = []; // Count Number of elements
+let lista = []; // Array of elements of the document content
 
 //This function create a title
 
@@ -18,7 +19,7 @@ const crearTitulo = ()=>{
 
 //This function create a id for every link 
 
-const numId = text =>{
+const id = text =>{
     for (let i of text) {
         let wihtOutSharp = i.replace(/#|_/g,'');
         let num = wihtOutSharp.slice(1,4);
@@ -29,12 +30,23 @@ const numId = text =>{
 
 }
 
+// Loop of lista elements
+
+const crearLista = text =>{
+    for (let i of text) {
+        let wihtOutSharp = i.replace(/#|_/g,'');
+        lista.push(wihtOutSharp);
+    }
+}
 
 //This function create a list in markdown format
 
-const crearLista = text =>{
-   //let addHTML = `- <a href='id${withOutSpace}'>${replace}</a>`;
-   //createFile += addHTML + '\n';
+const addLista = () =>{
+    for (let i = 0; i < idNum.length; i++) {
+        let addHTML = `- <a href='id${idNum[i]}'>${lista[i]}</a>`;   
+        createFile += addHTML + '\n';
+    }
+    
 }
 
 //This function format the header of markdown files
@@ -65,7 +77,7 @@ const downloadFile = () =>{
 //This is called where initial all 
 
 readFile.addEventListener('change',()=>{
-    //crearTitulo();
+    crearTitulo();
     const reader = new FileReader();
     reader.addEventListener('load',(e)=>{
         let result = e.target.result;
@@ -75,8 +87,9 @@ readFile.addEventListener('change',()=>{
                 
             }
         }
-        numId(varLoop);
+        id(varLoop);
         crearLista(varLoop);
+        addLista();
         formatMD(varLoop);
     })
     reader.readAsText(readFile.files[0]);
