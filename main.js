@@ -6,17 +6,28 @@ const textarea = document.getElementById('textarea');
 const img = document.getElementById('img');
 
 let createFile = ''; // Here add the all content of the file
-let count = 0; // Count num of img 
 let varLoop = []; // Count the content of the document
 let idNum = []; // Count Number of elements
 let lista = []; // Array of elements of the document content without #
 let markdown = []; //Arrry of markdown elements with #
+
+let totalIMG = [];// Total number of images
 
 //This function create a title
 
 const crearTitulo = ()=>{
     let titulo = prompt('Titulo oficial');
     createFile += '# ' + titulo + '\n';
+};
+
+
+//Count total of img
+
+const countIMG = ()=>{
+    let img = prompt('¿Cuántas imagenes tienes?');
+    for (let i = 0; i < Number(img); i++) {
+        totalIMG.push(`![](img/${i+1}.png)` + '\n');
+    }
 };
 
 //This function create a id for every link 
@@ -36,56 +47,58 @@ const id = text =>{
 
 const crearLista = text =>{
     for (let i of text) {
-        let wihtOutSharp = i.replace(/#|_/g,'');
-        lista.push(wihtOutSharp);
+        lista.push(i);
     }
 }
 
 //This function create a list in markdown format
 
 const addLista = () =>{
+    
     for (let i = 0; i < idNum.length; i++) {
-        let addHTML = `- <a href='id${idNum[i]}'>${lista[i]}</a>`;   
+        let addHTML = '';
+        if(lista[i].includes('##')){
+            addHTML += `    - <a href='id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
+        }else{
+            addHTML += `- <a href='id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
+        }  
         createFile += addHTML + '\n';
     }
     
 }
 
-//Add hr
 
-
-
-
-// Loop of markdown elements
-
-const crearMDFormat = text =>{
-    for (let i of text) {
-        markdown.push(i);
+const addIMG = (total) =>{
+    let result = '';
+    for (let i = 0; i < total; i++) {
+        result += totalIMG.shift();
     }
+    return result;
+    
 }
-
-
-//Count total of img
-
-const countIMG = ()=>{
-    let img = prompt('¿Cuántas imagenes tienes?');
-    for (let i = 0; i < Number(img); i++) {
-        createFile += `![]/img${i}.png` + '\n';
-    }
-};
-
 
 
 //This function format the header of markdown files
 
 const formatMD = () =>{
+    countIMG();
     for (let i = 0; i < idNum.length; i++) {
-        let addHTML = `${markdown[i]}<a href='id${idNum[i]}'></a>`;   
+        let addHTML = '';
+        if(lista[i].includes('##')){
+
+        }
+        if (totalIMG.length > 0){
+            let questionIMG = prompt(`¿Cuántas imagenes vas a añadir? en ${lista[i]} TOTAL de IMG: ${totalIMG.length}`);
+            questionIMG = Number(questionIMG);  
+            addHTML += `${lista[i]}<a href='id${idNum[i]}'></a>` + '\n';
+            addHTML += addIMG(questionIMG);
+        }else{
+            addHTML += `${lista[i]}<a href='id${idNum[i]}'></a>` + '\n';
+        }
         createFile += addHTML + '\n';
     } 
     
 }
-
 
 
 // This function create a file named README.md whit all content
@@ -126,9 +139,8 @@ const leerDocumento = ar =>{
         id(varLoop);
         crearLista(varLoop);
         addLista();
-        crearMDFormat(varLoop);
         formatMD();
-        countIMG();
+        
     });
 }
 
