@@ -58,9 +58,9 @@ const addLista = () =>{
     for (let i = 0; i < idNum.length; i++) {
         let addHTML = '';
         if(lista[i].includes('##')){
-            addHTML += `    - <a href='id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
+            addHTML += `    - <a href='#id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
         }else{
-            addHTML += `- <a href='id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
+            addHTML += `- <a href='#id${idNum[i]}'>${lista[i].replace(/#|_/g,'')}</a>`;
         }  
         createFile += addHTML + '\n';
     }
@@ -71,7 +71,10 @@ const addLista = () =>{
 const addIMG = (total) =>{
     let result = '';
     for (let i = 0; i < total; i++) {
-        result += totalIMG.shift();
+        if (totalIMG.length == 0){
+            break;
+        }
+        result += totalIMG.shift() + '\n';
     }
     return result;
     
@@ -87,13 +90,13 @@ const formatMD = () =>{
         if(lista[i].includes('##')){
 
         }
-        if (totalIMG.length > 0){
+        if (totalIMG.length > 0 ){
             let questionIMG = prompt(`¿Cuántas imagenes vas a añadir? en ${lista[i]} TOTAL de IMG: ${totalIMG.length}`);
             questionIMG = Number(questionIMG);  
-            addHTML += `${lista[i]}<a href='id${idNum[i]}'></a>` + '\n';
-            addHTML += addIMG(questionIMG);
+            addHTML += `\n ${lista[i]}<a name='id${idNum[i]}'></a>` + '\n';
+            addHTML += '\n' + addIMG(questionIMG);
         }else{
-            addHTML += `${lista[i]}<a href='id${idNum[i]}'></a>` + '\n';
+            addHTML += `\n ${lista[i]}<a name='id${idNum[i]}'></a>` + '\n';
         }
         createFile += addHTML + '\n';
     } 
