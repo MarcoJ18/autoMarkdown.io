@@ -1,15 +1,11 @@
 "use strict";
 const readFile = document.getElementById('readFile');
 const generate = document.getElementById('generate');
-const md = document.getElementById('md');
-const textarea = document.getElementById('textarea');
-const img = document.getElementById('img');
 
 let createFile = ''; // Here add the all content of the file
 let varLoop = []; // Count the content of the document
 let idNum = []; // Count Number of elements
 let lista = []; // Array of elements of the document content without #
-let markdown = []; //Arrry of markdown elements with #
 
 let totalIMG = [];// Total number of images
 

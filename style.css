@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #fe3;
+}
+
+.subcontainer{
+    width: 50%;
+    background: #f99;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #faa;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    box-shadow: 3px 3px 10px #555, -1px -1px 10px #555;
+    transition: width 800ms linear, height 800ms linear;
+    -webkit-transition: width 800ms linear, height 800ms linear;
+    -moz-transition: width 800ms linear, height 800ms linear;
+    -ms-transition: width 800ms linear, height 800ms linear;
+    -o-transition: width 800ms linear, height 800ms linear;
+}
+
+.subcontainer:hover{
+    cursor:crosshair;
+    width: 60%;
+    height: 60%;
+    transition: all .5s ease-in-out;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+}
+
+input[type="file"]{
+    cursor: crosshair;
+}
+
+#generate{
+    cursor: crosshair;
+}
+
+.div-effect{
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
